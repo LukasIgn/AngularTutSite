@@ -1,0 +1,11 @@
+C:\Users\Lukas\source\repos\AngularTutSite\AngularTutSiteApi\bin\Debug\netcoreapp2.0\AngularTutSiteApi.deps.json
+C:\Users\Lukas\source\repos\AngularTutSite\AngularTutSiteApi\bin\Debug\netcoreapp2.0\AngularTutSiteApi.runtimeconfig.json
+C:\Users\Lukas\source\repos\AngularTutSite\AngularTutSiteApi\bin\Debug\netcoreapp2.0\AngularTutSiteApi.runtimeconfig.dev.json
+C:\Users\Lukas\source\repos\AngularTutSite\AngularTutSiteApi\bin\Debug\netcoreapp2.0\AngularTutSiteApi.dll
+C:\Users\Lukas\source\repos\AngularTutSite\AngularTutSiteApi\bin\Debug\netcoreapp2.0\AngularTutSiteApi.pdb
+C:\Users\Lukas\source\repos\AngularTutSite\AngularTutSiteApi\obj\Debug\netcoreapp2.0\AngularTutSiteApi.csproj.CoreCompileInputs.cache
+C:\Users\Lukas\source\repos\AngularTutSite\AngularTutSiteApi\obj\Debug\netcoreapp2.0\AngularTutSiteApi.AssemblyInfoInputs.cache
+C:\Users\Lukas\source\repos\AngularTutSite\AngularTutSiteApi\obj\Debug\netcoreapp2.0\AngularTutSiteApi.AssemblyInfo.cs
+C:\Users\Lukas\source\repos\AngularTutSite\AngularTutSiteApi\obj\Debug\netcoreapp2.0\AngularTutSiteApi.dll
+C:\Users\Lukas\source\repos\AngularTutSite\AngularTutSiteApi\obj\Debug\netcoreapp2.0\AngularTutSiteApi.pdb
+C:\Users\Lukas\source\repos\AngularTutSite\AngularTutSiteApi\obj\Debug\netcoreapp2.0\AngularTutSiteApi.csprojResolveAssemblyReference.cache
