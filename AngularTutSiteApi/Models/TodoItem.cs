@@ -12,3 +12,4 @@ namespace AngularTutSiteApi.Models
         public bool IsComplete { get; set; }
     }
 }
+ 
