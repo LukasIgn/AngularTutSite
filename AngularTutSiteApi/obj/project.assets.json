@@ -13124,23 +13124,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lukas\\.nuget\\packages\\": {},
+    "C:\\Users\\lignatavicius\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lukas\\source\\repos\\AngularTutSite\\AngularTutSiteApi\\AngularTutSiteApi.csproj",
+      "projectUniqueName": "C:\\Users\\lignatavicius\\Work\\AngularTutSite\\AngularTutSite\\AngularTutSiteApi\\AngularTutSiteApi.csproj",
       "projectName": "AngularTutSiteApi",
-      "projectPath": "C:\\Users\\Lukas\\source\\repos\\AngularTutSite\\AngularTutSiteApi\\AngularTutSiteApi.csproj",
-      "packagesPath": "C:\\Users\\Lukas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lukas\\source\\repos\\AngularTutSite\\AngularTutSiteApi\\obj\\",
+      "projectPath": "C:\\Users\\lignatavicius\\Work\\AngularTutSite\\AngularTutSite\\AngularTutSiteApi\\AngularTutSiteApi.csproj",
+      "packagesPath": "C:\\Users\\lignatavicius\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\lignatavicius\\Work\\AngularTutSite\\AngularTutSite\\AngularTutSiteApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Lukas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\lignatavicius\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

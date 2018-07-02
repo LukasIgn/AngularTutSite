@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[CurdSnack]
+(
+	[Id] INT NOT NULL PRIMARY KEY,
+	[Name] VARCHAR(255) NULL,
+	[Email] VARCHAR(255) NULL,
+	[Type] VARCHAR(255) NULL,
+)
