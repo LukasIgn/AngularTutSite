@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AngularTutSiteApi.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace AngularTutSiteApi.Controllers
 {
@@ -12,11 +14,14 @@ namespace AngularTutSiteApi.Controllers
     [Route("api/CurdSnacks")]
     public class CurdSnacksController : Controller
     {
+        private readonly ILogger _logger;
+
         private readonly CurdSnackContext _context;
 
-        public CurdSnacksController(CurdSnackContext context)
+        public CurdSnacksController(CurdSnackContext context, ILogger<CurdSnacksController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/CurdSnacks
@@ -43,6 +48,33 @@ namespace AngularTutSiteApi.Controllers
             }
 
             return Ok(curdSnack);
+        }
+
+        // PUT: api/CurdSnacks
+        [HttpPut]
+        public async Task<IActionResult> PutCurdSnack([FromBody] IEnumerable<CurdSnack> curdSnacks)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            foreach (var snack in curdSnacks)
+            {
+                _context.Attach(snack).State = EntityState.Modified;
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "PutCurdSnack error");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            return NoContent();
         }
 
         // PUT: api/CurdSnacks/5
@@ -93,13 +125,14 @@ namespace AngularTutSiteApi.Controllers
 
             try
             {
-                
-            await _context.SaveChangesAsync();
-            }catch(Exception ex)
-            {
-                var a = ex;
+                await _context.SaveChangesAsync();
             }
-            return CreatedAtAction("GetCurdSnack", new { id = curdSnack.Id }, curdSnack);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "PostCurdSnack error");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+            return Ok();
         }
 
         // DELETE: api/CurdSnacks/5

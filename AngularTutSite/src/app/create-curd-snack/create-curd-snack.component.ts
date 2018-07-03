@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { CurdSnackService } from '../curd-snack.service';
+import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
+import { Snack } from '../snack';
 
 @Component({
   selector: 'app-create-curd-snack',
@@ -11,16 +14,46 @@ export class CreateCurdSnackComponent implements OnInit {
 
   registerForm: FormGroup;
   submitted = false;
+  dataSource = new MatTableDataSource([]);
+  displayedColumns = ['id', 'name', 'email', 'type'];
+  editableDataCollection = [];
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private service: CurdSnackService) { }
 
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       name: ['', Validators.required],
       type: ['', Validators.required]
     });
+
+    this.service.getCurdSnacks().subscribe(
+      response => {
+        this.dataSource = new MatTableDataSource(response);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }
+    );
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
+  onChange(row: Snack){
+    if(!this.editableDataCollection.includes(row.id)){
+      this.editableDataCollection.push(row.id);
+    }
   }
 
   // convenience getter for easy access to form fields
@@ -34,6 +67,25 @@ export class CreateCurdSnackComponent implements OnInit {
       return;
     }
 
-    //success
+    var data = this.registerForm.value;
+
+    this.service.postCurdSnacks(this.registerForm.value).subscribe( response => {
+      this.service.getCurdSnacks().subscribe(
+        response => {
+          this.dataSource = new MatTableDataSource(response);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }
+      );
+    });
+  }
+
+  onEditTable(){
+    var editableList = this.dataSource.filteredData.filter(item => {
+      if(this.editableDataCollection.includes(item.id)){
+        return item;
+      }
+    })
+    this.service.putCurdSnacks(editableList).subscribe();
   }
 }

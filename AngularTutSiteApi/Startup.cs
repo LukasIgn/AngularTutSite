@@ -32,6 +32,10 @@ namespace AngularTutSiteApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseMvc();
         }
