@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Papildoma sūrelio informacija</h1>
+<div mat-dialog-content>
+  <p>Sūrelio aprašymas</p>
+  <mat-form-field>
+    <textarea matInput placeholder="Aprašyk sūrelį" [(ngModel)]="detail.details"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Atšaukti</button>
+  <button mat-button [mat-dialog-close]="detail.details" cdkFocusInitial>Išsaugoti</button>
+</div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Snack } from '../app/snack';
+import { Snack } from '../../snack';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})

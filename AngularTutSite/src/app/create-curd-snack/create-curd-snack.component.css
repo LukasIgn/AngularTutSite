@@ -18,3 +18,17 @@
     overflow: auto;
     max-height: 750px;
   }
+
+.id-button {
+    width: 100%;
+    margin-right: 15px;
+    background: transparent;
+    text-align: left;
+}
+
+.mat-tooltip.tooltip {
+    max-width: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

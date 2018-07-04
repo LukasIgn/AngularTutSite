@@ -53,13 +53,13 @@
 
         <!-- Id Column -->
         <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+          <mat-cell *matCellDef="let element"> <button mat-raised-button matTooltip="Aprašyk sūrelį" class="btn id-button" (click)="openDetail(element.id)">{{element.id}}</button> </mat-cell>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Vardas </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <mat-form-field floatLabel="never">
               <input matInput placeholder="Name" [value]="element.name" [(ngModel)]="element.name" (ngModelChange)="onChange(element)">
@@ -69,7 +69,7 @@
 
         <!-- Email Column -->
         <ng-container matColumnDef="email">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> El. paštas </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <mat-form-field floatLabel="never">
               <input matInput placeholder="email" [value]="element.email" [(ngModel)]="element.email" (ngModelChange)="onChange(element)">
@@ -79,7 +79,7 @@
         
         <!-- Type Column -->
         <ng-container matColumnDef="type">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Type </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Tipas </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <mat-form-field floatLabel="never">
               <input matInput placeholder="type" [value]="element.type" [(ngModel)]="element.type" (ngModelChange)="onChange(element)">
@@ -97,7 +97,7 @@
                 [pageSize]="10">
       </mat-paginator>
 
-      <button class="btn btn-primary" (click)="onEditTable()">Koreguoti</button>
+      <button class="btn btn-primary" (click)="onEditTable()">Saugoti</button>
     </div>
   </div>
 </div>

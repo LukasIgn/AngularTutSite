@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CurdSnackService } from '../curd-snack.service';
-import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
+import { CurdSnackService } from '../services/curd-snack-service/curd-snack.service';
+import { MatSort, MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig} from '@angular/material';
 import { Snack } from '../snack';
+import { CurdSnackDialogComponent } from '../curd-snack-dialog/curd-snack-dialog.component';
+import { SnackDetail} from '../snack-detail';
 
 @Component({
   selector: 'app-create-curd-snack',
@@ -11,19 +13,21 @@ import { Snack } from '../snack';
   styleUrls: ['./create-curd-snack.component.css']
 })
 export class CreateCurdSnackComponent implements OnInit {
-
   registerForm: FormGroup;
   submitted = false;
   dataSource = new MatTableDataSource([]);
   displayedColumns = ['id', 'name', 'email', 'type'];
   editableDataCollection = [];
+  details: SnackDetail;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(CurdSnackDialogComponent) detais: CurdSnackDialogComponent;
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
-              private service: CurdSnackService) { }
+              private service: CurdSnackService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -87,5 +91,19 @@ export class CreateCurdSnackComponent implements OnInit {
       }
     })
     this.service.putCurdSnacks(editableList).subscribe();
+  }
+
+  openDetail(id): void {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {id: id};
+
+    const dialogRef = this.dialog.open(CurdSnackDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.details = result;
+    });
   }
 }

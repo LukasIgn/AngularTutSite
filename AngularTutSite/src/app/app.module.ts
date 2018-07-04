@@ -47,13 +47,15 @@ import { CreateCurdSnackComponent } from './create-curd-snack/create-curd-snack.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditCurdSnackComponent } from './edit-curd-snack/edit-curd-snack.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CurdSnackDialogComponent } from './curd-snack-dialog/curd-snack-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     CreateCurdSnackComponent,
-    EditCurdSnackComponent
+    EditCurdSnackComponent,
+    CurdSnackDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -97,6 +99,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatToolbarModule,
     MatTooltipModule,
     MatStepperModule
+  ],
+  entryComponents: [
+    CurdSnackDialogComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]
