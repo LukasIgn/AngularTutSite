@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using AngularTutSiteApi.Contexts;
 
-namespace AngularTutSiteApi.Models
+namespace AngularTutSiteApi.Initializers
 {
-    public static class DbInitializer
+    public static class CurdSnackInitializer
     {
         public static void Initialize(CurdSnackContext context)
         {

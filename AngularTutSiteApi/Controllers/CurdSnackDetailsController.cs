@@ -12,36 +12,36 @@ using Microsoft.Extensions.Logging;
 namespace AngularTutSiteApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/CurdSnacks")]
-    public class CurdSnacksController : Controller
+    [Route("api/CurdSnackDetail")]
+    public class CurdSnackDetailsController : Controller
     {
         private readonly ILogger _logger;
 
         private readonly CurdSnackContext _context;
 
-        public CurdSnacksController(CurdSnackContext context, ILogger<CurdSnacksController> logger)
+        public CurdSnackDetailsController(CurdSnackContext context, ILogger<CurdSnackDetailsController> logger)
         {
             _context = context;
             _logger = logger;
         }
 
-        // GET: api/CurdSnacks
+        // GET: api/CurdSnackDetail
         [HttpGet]
-        public IEnumerable<CurdSnack> GetCurdSnacks()
+        public IEnumerable<CurdSnackDetail> GetCurdSnackDetails()
         {
-            return _context.CurdSnacks;
+            return _context.CurdSnackDetails;
         }
 
-        // GET: api/CurdSnacks/5
+        // GET: api/CurdSnackDetails/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCurdSnack([FromRoute] long id)
+        public async Task<IActionResult> GetCurdSnackDetail([FromRoute] long id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var curdSnack = await _context.CurdSnacks.SingleOrDefaultAsync(m => m.Id == id);
+            var curdSnack = await _context.CurdSnackDetails.SingleOrDefaultAsync(m => m.Id == id);
 
             if (curdSnack == null)
             {
@@ -51,16 +51,16 @@ namespace AngularTutSiteApi.Controllers
             return Ok(curdSnack);
         }
 
-        // PUT: api/CurdSnacks
+        // PUT: api/CurdSnackDetail
         [HttpPut]
-        public async Task<IActionResult> PutCurdSnack([FromBody] IEnumerable<CurdSnack> curdSnacks)
+        public async Task<IActionResult> PutCurdSnack([FromBody] IEnumerable<CurdSnackDetail> curdSnackDetails)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            foreach (var snack in curdSnacks)
+            foreach (var snack in curdSnackDetails)
             {
                 _context.Attach(snack).State = EntityState.Modified;
             }
@@ -78,21 +78,21 @@ namespace AngularTutSiteApi.Controllers
             return NoContent();
         }
 
-        // PUT: api/CurdSnacks/5
+        // PUT: api/CurdSnackDetail/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCurdSnack([FromRoute] long id, [FromBody] CurdSnack curdSnack)
+        public async Task<IActionResult> PutCurdSnack([FromRoute] long id, [FromBody] CurdSnackDetail curdSnackDetail)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != curdSnack.Id)
+            if (id != curdSnackDetail.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(curdSnack).State = EntityState.Modified;
+            _context.Entry(curdSnackDetail).State = EntityState.Modified;
 
             try
             {
@@ -100,29 +100,26 @@ namespace AngularTutSiteApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CurdSnackExists(id))
+                if (!CurdSnackDetailExists(id))
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
         }
 
-        // POST: api/CurdSnacks
+        // POST: api/CurdSnackDetail
         [HttpPost]
-        public async Task<IActionResult> PostCurdSnack([FromBody] CurdSnack curdSnack)
+        public async Task<IActionResult> PostCurdSnack([FromBody] CurdSnackDetail curdSnackDetail)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.CurdSnacks.Add(curdSnack);
+            _context.CurdSnackDetails.Add(curdSnackDetail);
 
             try
             {
@@ -130,36 +127,37 @@ namespace AngularTutSiteApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "PostCurdSnack error");
+                _logger.LogError(ex, "PostCurdSnackDetail error");
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
             return Ok();
         }
 
-        // DELETE: api/CurdSnacks/5
+        // DELETE: api/CurdSnackDetail/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCurdSnack([FromRoute] long id)
+        public async Task<IActionResult> DeleteCurdSnackDetail([FromRoute] long id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var curdSnack = await _context.CurdSnacks.SingleOrDefaultAsync(m => m.Id == id);
-            if (curdSnack == null)
+            var curdSnackDetail = await _context.CurdSnackDetails.SingleOrDefaultAsync(m => m.Id == id);
+
+            if (curdSnackDetail == null)
             {
                 return NotFound();
             }
 
-            _context.CurdSnacks.Remove(curdSnack);
+            _context.CurdSnackDetails.Remove(curdSnackDetail);
             await _context.SaveChangesAsync();
 
-            return Ok(curdSnack);
+            return Ok(curdSnackDetail);
         }
 
-        private bool CurdSnackExists(long id)
+        private bool CurdSnackDetailExists(long id)
         {
-            return _context.CurdSnacks.Any(e => e.Id == id);
+            return _context.CurdSnackDetails.Any(e => e.Id == id);
         }
     }
 }

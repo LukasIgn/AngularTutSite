@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace AngularTutSiteApi.Models
+﻿namespace AngularTutSiteApi.Entities
 {
     public class CurdSnack
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
         public string Name { get; set; }
@@ -12,6 +9,10 @@ namespace AngularTutSiteApi.Models
         public string Email { get; set; }
 
         public string Type { get; set; }
+
+        public int DetailForeignKey { get; set; }
+
+        public CurdSnackDetail Detail { get; set; }
     }
 }
  

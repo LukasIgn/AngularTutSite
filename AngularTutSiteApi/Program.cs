@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using AngularTutSiteApi.Models;
+using AngularTutSiteApi.Contexts;
+using AngularTutSiteApi.Initializers;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -23,7 +19,7 @@ namespace AngularTutSiteApi
                 try
                 {
                     var context = services.GetRequiredService<CurdSnackContext>();
-                    DbInitializer.Initialize(context);
+                    CurdSnackInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {
