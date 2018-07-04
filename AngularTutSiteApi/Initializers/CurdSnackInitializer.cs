@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using AngularTutSiteApi.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace AngularTutSiteApi.Initializers
 {
