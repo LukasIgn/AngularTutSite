@@ -25,7 +25,7 @@ namespace AngularTutSiteApi.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("DetailForeignKey");
+                    b.Property<long>("DetailId");
 
                     b.Property<string>("Email");
 
@@ -35,12 +35,16 @@ namespace AngularTutSiteApi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DetailId")
+                        .IsUnique();
+
                     b.ToTable("CurdSnack");
                 });
 
             modelBuilder.Entity("AngularTutSiteApi.Entities.CurdSnackDetail", b =>
                 {
-                    b.Property<long>("Id");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Details");
 
@@ -49,11 +53,11 @@ namespace AngularTutSiteApi.Migrations
                     b.ToTable("CurdSnackDetail");
                 });
 
-            modelBuilder.Entity("AngularTutSiteApi.Entities.CurdSnackDetail", b =>
+            modelBuilder.Entity("AngularTutSiteApi.Entities.CurdSnack", b =>
                 {
-                    b.HasOne("AngularTutSiteApi.Entities.CurdSnack")
-                        .WithOne("Detail")
-                        .HasForeignKey("AngularTutSiteApi.Entities.CurdSnackDetail", "Id")
+                    b.HasOne("AngularTutSiteApi.Entities.CurdSnackDetail", "Detail")
+                        .WithOne("CurdSnack")
+                        .HasForeignKey("AngularTutSiteApi.Entities.CurdSnack", "DetailId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -33,6 +33,11 @@ namespace AngularTutSiteApi.Controllers
         }
 
         // GET: api/CurdSnackDetails/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">CurdSnack id</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCurdSnackDetail([FromRoute] long id)
         {
@@ -41,29 +46,36 @@ namespace AngularTutSiteApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var curdSnack = await _context.CurdSnackDetails.SingleOrDefaultAsync(m => m.Id == id);
-
+            var curdSnack = await _context.CurdSnacks.SingleOrDefaultAsync(m => m.Id == id);
             if (curdSnack == null)
             {
-                return NotFound();
+                return NoContent();
+            }
+            var curdSnackDetail = await _context.CurdSnackDetails.SingleOrDefaultAsync(m => m.Id == curdSnack.DetailId);
+            if (curdSnack.Detail == null)
+            {
+                return NoContent();
             }
 
-            return Ok(curdSnack);
+            var response = new CurdSnackDetail
+            {
+                Id = curdSnackDetail.Id,
+                Details = curdSnackDetail.Details
+            };
+
+            return Ok(response);
         }
 
         // PUT: api/CurdSnackDetail
         [HttpPut]
-        public async Task<IActionResult> PutCurdSnack([FromBody] IEnumerable<CurdSnackDetail> curdSnackDetails)
+        public async Task<IActionResult> PutCurdSnackDetail([FromBody] CurdSnackDetail curdSnackDetail)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            foreach (var snack in curdSnackDetails)
-            {
-                _context.Attach(snack).State = EntityState.Modified;
-            }
+            _context.Entry(curdSnackDetail).State = EntityState.Modified;
 
             try
             {
@@ -79,19 +91,28 @@ namespace AngularTutSiteApi.Controllers
         }
 
         // PUT: api/CurdSnackDetail/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">CurdSnack id</param>
+        /// <param name="curdSnackDetail">curdSnackDetail data</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCurdSnack([FromRoute] long id, [FromBody] CurdSnackDetail curdSnackDetail)
+        public async Task<IActionResult> PutCurdSnackDetail([FromRoute] long id, [FromBody] CurdSnackDetail curdSnackDetail)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != curdSnackDetail.Id)
+            var curdSnack = _context.CurdSnacks.FirstOrDefault(x => x.Id == id);
+
+            if (curdSnack == null)
             {
                 return BadRequest();
             }
 
+            curdSnackDetail.Id = curdSnack.DetailId;
             _context.Entry(curdSnackDetail).State = EntityState.Modified;
 
             try
@@ -110,17 +131,23 @@ namespace AngularTutSiteApi.Controllers
             return NoContent();
         }
 
-        // POST: api/CurdSnackDetail
-        [HttpPost]
-        public async Task<IActionResult> PostCurdSnack([FromBody] CurdSnackDetail curdSnackDetail)
+        // POST: api/CurdSnackDetail/5
+        [HttpPost("{id}")]
+        public async Task<IActionResult> PostCurdSnackDetail([FromRoute] long id, [FromBody] CurdSnackDetail curdSnackDetail)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.CurdSnackDetails.Add(curdSnackDetail);
+            var curdSnack = _context.CurdSnacks.FirstOrDefault(x => x.Id == id);
 
+            if (curdSnack == null)
+            {
+                return BadRequest();
+            }
+            curdSnack.Detail = curdSnackDetail;
+            
             try
             {
                 await _context.SaveChangesAsync();
@@ -146,7 +173,7 @@ namespace AngularTutSiteApi.Controllers
 
             if (curdSnackDetail == null)
             {
-                return NotFound();
+                return NoContent();
             }
 
             _context.CurdSnackDetails.Remove(curdSnackDetail);

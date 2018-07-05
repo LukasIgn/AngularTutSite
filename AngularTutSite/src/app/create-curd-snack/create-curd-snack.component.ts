@@ -2,10 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CurdSnackService } from '../services/curd-snack-service/curd-snack.service';
-import { MatSort, MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig} from '@angular/material';
+import { MatSort, MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material';
 import { Snack } from '../snack';
 import { CurdSnackDialogComponent } from '../curd-snack-dialog/curd-snack-dialog.component';
 import { SnackDetail} from '../snack-detail';
+import { CurdSnackDetailServiceService } from '../services/curd-snack-detail-service/curd-snack-detail-service.service';
 
 @Component({
   selector: 'app-create-curd-snack',
@@ -18,7 +19,6 @@ export class CreateCurdSnackComponent implements OnInit {
   dataSource = new MatTableDataSource([]);
   displayedColumns = ['id', 'name', 'email', 'type'];
   editableDataCollection = [];
-  details: SnackDetail;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -27,7 +27,8 @@ export class CreateCurdSnackComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private service: CurdSnackService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              private detailService: CurdSnackDetailServiceService) { }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -100,10 +101,33 @@ export class CreateCurdSnackComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.data = {id: id};
 
-    const dialogRef = this.dialog.open(CurdSnackDialogComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.details = result;
+    this.detailService.getCurdSnackDetail(id).subscribe(response => {
+      const dialogConfig = new MatDialogConfig();
+      var dataExists = false;
+
+      dialogConfig.disableClose = false;
+      dialogConfig.autoFocus = true;
+      if(response.status === 200){
+        dialogConfig.data = response.body;
+        dataExists = true;
+      }else{
+        dialogConfig.data = new SnackDetail(); 
+      }
+    
+      const dialogRef = this.dialog.open(CurdSnackDialogComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(result => {
+        if(result && result.dontSave){
+          //dont save data
+          return;
+        }
+        //save data
+        var detailRequest = new SnackDetail(dialogRef.componentInstance.detail);
+        if(dataExists){
+          this.detailService.putCurdSnackDetail(id, detailRequest).subscribe();
+        }else{
+          this.detailService.postCurdSnackDetail(id, detailRequest).subscribe();
+        }
+      });
     });
   }
 }

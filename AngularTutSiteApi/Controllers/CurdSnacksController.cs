@@ -121,7 +121,8 @@ namespace AngularTutSiteApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            var child = _context.CurdSnackDetails.Add(new CurdSnackDetail());
+            curdSnack.Detail = child.Entity;
             _context.CurdSnacks.Add(curdSnack);
 
             try

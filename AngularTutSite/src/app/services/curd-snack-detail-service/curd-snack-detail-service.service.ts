@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { SnackDetail } from '../../snack-detail';
+import { Observable } from 'rxjs';
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
+  observe: 'response'
 };
 
 @Injectable({
@@ -14,19 +15,19 @@ export class CurdSnackDetailServiceService {
 
   constructor(private http: HttpClient) { this.apiUrl = 'http://localhost:58055/api/'; }
 
-  getCurdSnackDetails(){
-    return this.http.get<SnackDetail[]>(this.apiUrl + 'CurdSnackDetail', httpOptions);
+  getCurdSnackDetails(): Observable<HttpResponse<SnackDetail[]>>{
+    return this.http.get<SnackDetail[]>(this.apiUrl + 'CurdSnackDetail', {observe: 'response'});
   };
 
-  getCurdSnackDetail(data){
-    return this.http.get<SnackDetail>(this.apiUrl + 'CurdSnackDetail?id=' + data, httpOptions);
+  getCurdSnackDetail(data): Observable<HttpResponse<SnackDetail>>{
+    return this.http.get<SnackDetail>(this.apiUrl + 'CurdSnackDetail/' + data, {observe: 'response'});
   };
 
-  postCurdSnackDetail(data: SnackDetail){
-    return this.http.post(this.apiUrl + 'CurdSnackDetail', data, httpOptions);
+  postCurdSnackDetail(id: number, data: SnackDetail){
+    return this.http.post(this.apiUrl + 'CurdSnackDetail/' + id, data);
   }
 
-  putCurdSnackDetail(data: SnackDetail){
-    return this.http.put(this.apiUrl + 'CurdSnacks', data, httpOptions);
+  putCurdSnackDetail(id: number, data: SnackDetail){
+    return this.http.put(this.apiUrl + 'CurdSnackDetail/' + id, data);
   }
 }

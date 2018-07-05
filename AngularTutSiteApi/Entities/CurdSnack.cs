@@ -10,7 +10,7 @@
 
         public string Type { get; set; }
 
-        public int DetailForeignKey { get; set; }
+        public long DetailId { get; set; }
 
         public CurdSnackDetail Detail { get; set; }
     }
